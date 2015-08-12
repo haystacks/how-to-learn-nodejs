@@ -1,0 +1,22 @@
+{
+  "name": "unofficial",
+  "version": "1.0.0",
+  "description": "测试",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cangku/node_module_unofficial.git"
+  },
+  "keywords": [
+    "unofficial"
+  ],
+  "author": "unofficial",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cangku/node_module_unofficial/issues"
+  },
+  "homepage": "https://github.com/cangku/node_module_unofficial"
+}
