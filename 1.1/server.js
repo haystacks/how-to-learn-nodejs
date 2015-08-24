@@ -18,22 +18,24 @@ server = {
 };*/
 
 var Server = function() {
-	var onRequest = function(req, res) {
-		var pathname = url.parse(req.url).pathname;
-		var html = 'hello world';
-		console.log('pathname:' + pathname);
-		res.writeHead({
-			'content-length': html.length,
-			'content-type': 'text/plain'
-		});
-		res.write(html);
-		res.end();
-	};
-	this.start = function() {
+	var route,
+		onRequest = function(req, res) {
+			var pathname = url.parse(req.url).pathname,
+				html = 'hello world';
+			route('pathname:' + pathname);
+			res.writeHead({
+				'content-length': html.length,
+				'content-type': 'text/plain'
+			});
+			res.write(html);
+			res.end();
+		};
+	this.start = function(r) {
+		route = r;
 		http.Server(onRequest).listen(9000);
 		console.log('server start');
 	};
 };
-var server = new Server;
+var server = new Server();
 
 module.exports = server;
