@@ -19,10 +19,10 @@ server = {
 
 var Server = function() {
 	var route,
+		handles,
 		onRequest = function(req, res) {
 			var pathname = url.parse(req.url).pathname,
-				html = 'hello world';
-			route('pathname:' + pathname);
+				html = route(handles, pathname);
 			res.writeHead({
 				'content-length': html.length,
 				'content-type': 'text/plain'
@@ -30,7 +30,8 @@ var Server = function() {
 			res.write(html);
 			res.end();
 		};
-	this.start = function(r) {
+	this.start = function(h, r) {
+		handles = h;
 		route = r;
 		http.Server(onRequest).listen(9000);
 		console.log('server start');
