@@ -14,12 +14,12 @@
 新增404 not found  
 这里学习到新的知识：  
 知识点一：:octocat:  
-`js 
+```js 
 var sleep = function(milliseconds) {  
 	var startTime = new Date().getTime();  
 	while(new Date().getTime() < startTime + milliseconds);  
 }
-`
+```
 知识点二：:octocat:  
 child process  
  ( ﹁ ﹁ ) https://nodejs.org/api/child_process.html  
