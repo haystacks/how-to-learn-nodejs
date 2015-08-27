@@ -1,8 +1,8 @@
-var route = function(handles, pathname) {
+var route = function(handles, pathname, res) {
 	if(typeof(handles[pathname]) == 'function') {
-		return handles[pathname]();
+		handles[pathname](res);
 	} else {
-		return '404 not found';
+		handles[404](res);
 	}
 }
 exports.route = route;

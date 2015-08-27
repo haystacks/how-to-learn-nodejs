@@ -10,7 +10,18 @@
 ##### route.js
 路由文件
 ##### controller.js
-控制器文件，定义控制器操作方法
+控制器文件，定义控制器操作方法  
+新增404 not found  
+这里学习到新的知识：  
+知识点一：:octocat:  
+`var sleep = function(milliseconds) {  
+	var startTime = new Date().getTime();  
+	while(new Date().getTime() < startTime + milliseconds);  
+}`  
+知识点二：:octocat:  
+child process  
+ ( ﹁ ﹁ ) https://nodejs.org/api/child_process.html  
 ##### 参考资料
 1. http://www.nodebeginner.org/index-zh-cn.html#blocking-and-non-blocking
 2. http://nodejs.org
+3. http://www.emoji-cheat-sheet.com/（学习中来些娱乐）
