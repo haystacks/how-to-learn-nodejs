@@ -23,6 +23,11 @@ var sleep = function(milliseconds) {
 知识点二：:octocat:  
 child process  
  ( ﹁ ﹁ ) https://nodejs.org/api/child_process.html  
+
+```
+2015-08-28 20:48:17 今天任性的什么也没学习，只是为了明天的考试，希望能够一切顺利  
+早睡明天需要早起
+```
 ##### 参考资料
 1. http://www.nodebeginner.org/index-zh-cn.html#blocking-and-non-blocking
 2. http://nodejs.org
