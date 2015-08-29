@@ -27,6 +27,7 @@ child process
 ```
 2015-08-28 20:48:17 今天任性的什么也没学习，只是为了明天的考试，希望能够一切顺利  
 早睡明天需要早起
+2015-08-29 21:51:12 今天考试过了，小黑本到手，终于可以放下心来安心学习了
 ```
 ##### 参考资料
 1. http://www.nodebeginner.org/index-zh-cn.html#blocking-and-non-blocking
