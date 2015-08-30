@@ -11,15 +11,20 @@ var Controller = function() { },
 		res.write(html);
 		res.end();
 	},
-	exec = require("child_process").exec;
+	exec = require("child_process").exec,
+	fs = require('fs');
 Controller.prototype.index = function(res) {
 	//sleep(10000);
-	exec('find /', function() {
-		onRespose('index方法', res);
-	});
+	fs.readFile('./index/tpl/index.html', function(err, data) {
+		if(err) throw err;
+		onRespose(data, res);
+	})
 }
 Controller.prototype.login = function(res) {
-	onRespose('login方法', res);
+	fs.readFile('./index/tpl/login.html', function(err, data) {
+		if(err) throw err;
+		onRespose(data, res);
+	})
 }
 /*
  * 没有找到请求资源
