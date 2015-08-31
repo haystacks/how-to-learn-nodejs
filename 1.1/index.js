@@ -8,5 +8,6 @@ var server     = require('./server'),
 	handles["/"] = controller.index;
 	handles['/index'] = controller.index;
 	handles['/login'] = controller.login;
-	handles[404] = controller.notFound;
+	handles['other'] = controller.other;
+	handles['404'] = controller.notFound;
 server.start(handles, route.route);

@@ -16,14 +16,17 @@ var Controller = function() { },
 Controller.prototype.index = function(res) {
 	//sleep(10000);
 	fs.readFile('./index/tpl/index.html', function(err, data) {
-		if(err) throw err;
-		onRespose(data, res);
+		err ? controller.notFound(res) : onRespose(data, res);
 	})
 }
 Controller.prototype.login = function(res) {
 	fs.readFile('./index/tpl/login.html', function(err, data) {
-		if(err) throw err;
-		onRespose(data, res);
+		err ? controller.notFound(res) : onRespose(data, res);
+	})
+}
+Controller.prototype.other = function(i) {
+	fs.readFile('.'+i.pathname, function(err, data) {
+		err ? controller.notFound(i.res) : onRespose(data, i.res);
 	})
 }
 /*
