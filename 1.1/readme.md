@@ -9,6 +9,10 @@
 现在的：`http.Server()`  
 ##### route.js
 路由文件
+**2015-09-01 22:57:18**  
+新增：  
+1. 添加非路由文件判断  
+2. 对于加载的文件进行直接加载  
 ##### controller.js
 控制器文件，定义控制器操作方法  
 新增404 not found  
@@ -37,6 +41,15 @@ child process
 加载样式的按照pathname判断来源，现在样式文件直接就是访问文件来源  
 解决办法：  
 路由重写，路由添加对于其他文件的判断  
+**2015-09-01 22:57:58**
+新增
+1. 新增other操作，主要针对直接加载文件操作，文件不存在返回404 not found
+2. 更正其他操作错误抛出异常操作，使用返回404 not found代替操作
+3. 待处理问题  
+问题描述：  
+加载css,js,image等等的头协议的未处理  
+解决办法：  
+重新针对各种情况完善相应的对于文件的类型的处理  
 ##### 参考资料
 1. http://www.nodebeginner.org/index-zh-cn.html#blocking-and-non-blocking
 2. http://nodejs.org
