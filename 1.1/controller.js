@@ -3,13 +3,31 @@ var Controller = function() { },
 		var startTime = new Date().getTime();
 		while(new Date().getTime() < startTime + milliseconds);
 	},
-	onRespose = function(html, res) {
-		res.writeHead({
-			'content-length': html.length,
-			'content-type': 'text/plain'
+	onRespose = function(html, res, type) {
+		res.writeHead(200, {
+			'Content-Length': html.length,
+			'Content-Type': type || 'text/html'
 		});
 		res.write(html);
 		res.end();
+	},
+	type = function(pathname) {
+		var start = pathname.indexOf('.')+1,
+			typeName = pathname.slice(start);
+		switch(typeName) {
+			case 'js':
+				return 'application/x-javascript';
+			case 'css':
+				return 'text/css';
+			case 'jpg':
+				return 'image/jpeg';
+			case 'png' || 'gif':
+				return 'image/' + typeName;
+			case 'ico':
+				return 'image/x-icon';
+			default:
+				return typeName;
+		}
 	},
 	exec = require("child_process").exec,
 	fs = require('fs');
@@ -26,7 +44,7 @@ Controller.prototype.login = function(res) {
 }
 Controller.prototype.other = function(i) {
 	fs.readFile('.'+i.pathname, function(err, data) {
-		err ? controller.notFound(i.res) : onRespose(data, i.res);
+		err ? controller.notFound(i.res) : onRespose(data, i.res, type(i.pathname));
 	})
 }
 /*
