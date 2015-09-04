@@ -50,10 +50,13 @@ child process
 加载css,js,image等等的头协议的未处理  
 解决办法：  
 重新针对各种情况完善相应的对于文件的类型的处理  
-**2015-09-03 22:21:29**
+**2015-09-03 22:21:29**  
 新增： type()  
 content-type添加部分类型css，js，images，ico的处理  
 删除一些无用的调试信息与引用信息  
+##### 回顾总结
+通过1.1的学习，我会简单的使用nodejs的一部分api，首先使用Server创建了http服务，紧接着创建了入口文件引入我们server.js，针对请求我们需要做出相应，于是我们需要创建一个路由文件，用于解析请求，使其找到指定的文件做出响应，响应就需要控制器文件，一个路由解析到一个方法，对于不同的方法做出不同的响应。  
+在接下来的学习中我将会给自己提升一些难度，希望能遇见正在学习node的同学，一起提升。  
 ##### 参考资料
 1. http://www.nodebeginner.org/index-zh-cn.html#blocking-and-non-blocking
 2. http://nodejs.org
