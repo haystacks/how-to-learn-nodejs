@@ -1,0 +1,7 @@
+{
+	"name": "pakeage",
+	"verson": "0.0.1",
+	"dependencies": {
+		"unofficial": "*"
+	}
+}
