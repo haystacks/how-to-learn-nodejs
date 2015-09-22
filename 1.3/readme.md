@@ -3,8 +3,10 @@
 ##### 预定义变量
 ###### require
 > require函数可以引入模块与json文件  
+
 ###### exports
 > exports导出函数  
+
 ###### module
 > module.exports导出json对象与函数  
 
