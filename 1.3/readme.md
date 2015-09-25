@@ -24,6 +24,9 @@
 1. Nodejs是一个JS脚本解析器。跨平台是因为复制了Nodejs到各个平台下，然后添加路径到系统变量中，即可在命令行使用```node```命令  
 2. 尽量只使用js编写模块。连C语言都不会人也只能如此了。  
 
+##### 代码的组织和部署
+NodeJS编写程序前，为了有个良好的开端，首先需要准备好代码的目录结构和部署方式，就如同修房子要先搭脚手架。  
+
 ##### 参考资料
 1. [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
 2. [nodejs api module](https://nodejs.org/api/modules.html)
