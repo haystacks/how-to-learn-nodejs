@@ -27,6 +27,20 @@
 ##### 代码的组织和部署
 NodeJS编写程序前，为了有个良好的开端，首先需要准备好代码的目录结构和部署方式，就如同修房子要先搭脚手架。  
 
+###### 模块路径解析规则
+require支持```/```和盘符绝对路径，也支持```./```的相对路径。但是路径如果一变化，整过过程就折腾的够呛，php也有类似的经历。  
+**内置模块**
+> 直接传递模块名
+```
+var fs = require('fs');
+```
+
+**自定义模块（node_modules）**
+> node自定义了一个node_modules模块来存放模块信息，安装模块后存放模块的位置。模块名/文件名，不指定文件名的情况下默认index.js，指定文件名调用指定的文件（unofficial/main）。
+```
+var unofficial = rquire('unofficial');
+```
+
 ##### 参考资料
 1. [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
 2. [nodejs api module](https://nodejs.org/api/modules.html)
