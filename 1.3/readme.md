@@ -41,6 +41,21 @@ var fs = require('fs');
 var unofficial = rquire('unofficial');
 ```
 
+##### package
+> 上文已经涉及到了  
+
+##### npm
+> npm作为nodejs的生态圈，这个包管理的使用也很重要
+```
+npm install unofficial
+npm install unofficial@0.0.1 //安装包0.0.1版本的unofficial
+npm install //按照package.json安装
+npm help //查看更多命令
+```
+
+##### 文件操作
+> 这里才正式开始  
+
 ##### 参考资料
 1. [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
 2. [nodejs api module](https://nodejs.org/api/modules.html)
