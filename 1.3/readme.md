@@ -54,9 +54,12 @@ npm help //查看更多命令
 ```
 
 ##### 文件操作
-> 这里才正式开始  
+
+
 
 ##### 参考资料
 1. [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
 2. [nodejs api module](https://nodejs.org/api/modules.html)
 3. [模块的初始化](http://www.ituring.com.cn/article/177569)
+4. [nodejs api fs](https://nodejs.org/api/fs.html)
+5. [nodejs api stream](https://nodejs.org/api/stream.html)
