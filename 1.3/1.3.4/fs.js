@@ -21,6 +21,27 @@ var fs = require('fs'),
 		fs.stat(argv[0], info);
 	},
 	argv = process.argv.slice(2);
+
+/**
+ * 遍历文件夹
+ */
+var path = argv[0],
+	showAllFiles = function() {
+	fs.readdir(path, function(err, files) {
+		if(err) throw err;
+		var i = -1,
+			len = files.length;
+		while(++i < len) {
+			var thisDirOrFile = files[i];
+			path += '/' + thisDirOrFile;
+			fs.stat(path, function(err, stats) {
+				if(!err) showAllFiles();
+			})
+			console.log(path);
+		}
+	});
+};
 !function() {
-	fileInfo();
+	//fileInfo();
+	showAllFiles();
 }()
