@@ -24,6 +24,7 @@ var fs = require('fs'),
 
 /**
  * 遍历文件夹
+ * 修改版本详见 traversal.js
  */
 var path = argv[0],
 	showAllFiles = function(path) {

@@ -54,7 +54,19 @@ npm help //查看更多命令
 ```
 
 ##### 文件操作
-
+```
+/**
+ * 文件复制
+ * copy()
+ **/
+node fs a.txt b.txt
+/**
+ * 文件夹遍历
+ * showAllFiles()
+ **/
+node fs ./
+```
+利用path模块优化文件遍历函数traversal.js
 
 
 ##### 参考资料
