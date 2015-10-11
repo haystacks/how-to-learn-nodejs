@@ -66,7 +66,9 @@ node fs a.txt b.txt
  **/
 node fs ./
 ```
-利用path模块优化文件遍历函数traversal.js
+3. 利用path模块优化文件遍历函数traversal.js  
+4. 文件压缩，压缩单个文件a.txt到a.zip（使用外部模块node-archiver）```node install archiver --save```这个外部模块可以根据实际情况使用，可以简化一下。具体这里不细说。  
+
 
 ##### 批量替换文件--
 有一个这样的需求，在工作中有一项工作是必须的。批量处理压缩包，有手动操作过百多个文件的，也有找同事帮忙写c#，然后自己学习更改的，也有bat的。方式多种多样，nodejs或许也是一种很好方法。如此我不妨试试写一写。  
@@ -78,3 +80,5 @@ node fs ./
 3. [模块的初始化](http://www.ituring.com.cn/article/177569)
 4. [nodejs api fs](https://nodejs.org/api/fs.html)
 5. [nodejs api stream](https://nodejs.org/api/stream.html)
+6. [node-archiver](https://github.com/archiverjs/node-archiver)
+7. [zip解压压缩的其他方案](http://www.html-js.com/article/Nodejs-study-notes-something-about-archive-and-unarchive-in-nodejs)
