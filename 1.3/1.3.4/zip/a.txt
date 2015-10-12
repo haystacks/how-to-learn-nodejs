@@ -1,3 +1,0 @@
-Appends an input source (text string, buffer, or stream) to the instance. When the instance has received, processed, and emitted the input, the entry event is fired.
-
-Replaced #addFile in v0.5.
