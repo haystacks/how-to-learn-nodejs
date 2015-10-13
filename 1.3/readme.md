@@ -66,12 +66,14 @@ node fs a.txt b.txt
  **/
 node fs ./
 ```
-3. 利用path模块优化文件遍历函数traversal.js  
-4. 文件压缩，压缩单个文件a.txt到a.zip（使用外部模块node-archiver）```npm install archiver --save```这个外部模块可以根据实际情况使用，可以简化一下。具体这里不细说。  
 
 ##### 批量替换文件--
 有一个这样的需求，在工作中有一项工作是必须的。批量处理压缩包，有手动操作过百多个文件的，也有找同事帮忙写c#，然后自己学习更改的，也有bat的。方式多种多样，nodejs或许也是一种很好方法。如此我不妨试试写一写。  
-1. 文件到文件夹（文件a.txt替换文件夹A,B,C下的a.txt）
+1. 文件到文件夹（文件a.txt替换文件夹A,B,C下的a.txt）  
+2. 利用path模块优化文件遍历函数traversal.js   
+3. 文件压缩，压缩单个文件a.txt到a.zip（使用外部模块node-archiver）```npm install archiver --save```这个外部模块可以根据实际情况使用，可以简化一下。具体这里不细说。  
+4. 文件夹压缩
+5. 优化（moment.js）
 
 ##### 参考资料
 1. [七天学会NodeJS](http://nqdeng.github.io/7-days-nodejs)
@@ -80,4 +82,5 @@ node fs ./
 4. [nodejs api fs](https://nodejs.org/api/fs.html)
 5. [nodejs api stream](https://nodejs.org/api/stream.html)
 6. [node-archiver](https://github.com/archiverjs/node-archiver)
-7. [zip解压压缩的其他方案](http://www.html-js.com/article/Nodejs-study-notes-something-about-archive-and-unarchive-in-nodejs)
+7. [zip解压压缩的其他方案](http://www.html-js.com/article/Nodejs-study-notes-something-about-archive-and-unarchive-in-nodejs)  
+8. [时间格式化方法](https://github.com/moment/moment)

@@ -10,23 +10,20 @@ var fs = require('fs'),
 	moment = require('moment'),
 	archiver = require('archiver'),
 	archive = archiver.create('zip'),
-	fileOrDirPath = process.argv.slice(2)[0],
-	fileOrDirName = path.basename(fileOrDirPath, path.extname(fileOrDirPath)),
+	src = process.argv.slice(2)[0],
+	dest = process.argv.slice(2)[1] ? process.argv.slice(2)[1] : '',
+	fileOrDirName = path.basename(src, path.extname(src)),
 	fileOrDirName = fileOrDirName == '.' || fileOrDirName == '..' ? moment().format('YYYYMMDDhhmmss') : fileOrDirName,//未命名文件或者文件夹（./或者../）以当前时间为准
-	output = fs.createWriteStream(fileOrDirName+'.zip');
+	zipName = fileOrDirName+'.zip',
+	zipPath = path.join(dest, zipName);
 //判断是文件还是文件夹
-fs.stat(fileOrDirPath, function(err, stats) {
+fs.stat(src, function(err, stats) {
 	if(err) throw err;
 	if(stats.isFile()) {//文件
-		archive.file(fileOrDirPath);
+		archive.file(src);
 	} else {//文件夹
-		archive.directory(fileOrDirPath);
+		archive.directory(src);
 	}
-	archive.pipe(output);
+	archive.pipe(fs.createWriteStream(zipPath));
 	archive.finalize();
 })
-/**
- * 待完善 => 2
- * ./或者../时排除压缩文件本身
- * 检测到同名压缩包存在，重命名压缩包文件
- */
