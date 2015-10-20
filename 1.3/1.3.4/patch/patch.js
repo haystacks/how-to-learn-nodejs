@@ -24,12 +24,11 @@ var fs = require('fs'),
 		})
 	},
 	copy = function(src) {
-		var srcArr = src.split(path.sep);
-		srcArr[0] = destArr[0];
-		destPath = path.join(srcArr.toString());
-		console.log(srcArr.toString());
-		console.log('正在复制'+ src +'到'+ destPath);
 		fs.readFile(src, function(err, data) {
+			var srcArr = src.split(path.sep);
+			srcArr.length > 1 ? srcArr[0] = destArr[0] : srcArr.unshift(destArr[0]);
+			var destPath = srcArr.join(path.sep);
+			console.log(src +'---'+ destPath);
 			if(err) throw err;
 			fs.writeFile(destPath, data, function() {
 				console.log('复制'+ src +'到'+ destPath +'成功');
