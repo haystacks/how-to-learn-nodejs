@@ -26,3 +26,10 @@ babel index --out-file es5-index
 # 输出目录-d，输出source map文件 -s
 babel -d build-dir source-dir -s
 ```
+
+4. let, const, var, import, export
+
+5. 解构赋值  
+参考资料:[mozilla](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)  
+
+6.
