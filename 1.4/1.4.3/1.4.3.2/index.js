@@ -81,3 +81,12 @@
     //{a, b} = {a:b, b:a};//不能这么写 对象是个问题
     console.log(a, b);//3, 1
 }
+
+//解析url
+{
+    let url = 'https://github.com/cangku/how-to-learn-nodejs/tree/dev/1.4/1.4.3'
+    let parseUrl = /^(\w+)\:\/\/([^\/]+)\/(.*)$/.exec(url);
+    console.log(parseUrl);
+    let [, protocol, host, path] = parseUrl;
+    console.log(host);
+}
