@@ -1,0 +1,14 @@
+{
+  "name": "get-photos-bg-tag-name",
+  "version": "1.0.0",
+  "description": "learn",
+  "main": "request.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "unofficial",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.9.0"
+  }
+}
