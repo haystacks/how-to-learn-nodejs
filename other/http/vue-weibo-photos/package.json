@@ -1,0 +1,23 @@
+{
+  "name": "vue-weibo-photos",
+  "version": "1.0.0",
+  "description": "vue demo",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --inline --hot --quiet",
+    "build": "NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cangku/how-to-learn-nodejs/tree/dev/other/http/vue-weibo-photos"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "unofficial",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
+  }
+}
