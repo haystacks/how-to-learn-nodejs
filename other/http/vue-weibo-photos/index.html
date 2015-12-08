@@ -1,25 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>vue-weibo-photos, just show some beautiful girls!</title>
+</head>
 <body>
-<style>
-@font-face {
-font-family: DeliciousRoman;
-src: url(http://www.font-face.com/fonts/delicious/Delicious-Roman.otf);
-font-weight:400;
-}
-</style>
-<canvas id="myCanvas" width="300" height="150" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.
-</canvas>
-
-<script>
-
-var c=document.getElementById("myCanvas");
-var ctx=c.getContext("2d");
-ctx.font="40px DeliciousRoman";
-ctx.fillText("Hello World",10,50);
-
-</script>
-
+    <div id="app">
+        <ul>
+            <li v-for="photo in photos">
+                <a href="javascript:void({{photo.album_id}})">
+                    <img class="pic" v-bind:src="photo.pic_host+'/cmw205/'+photo.pic_name" alt="" />
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script src="./static/build.js"></script>
 </body>
 </html>
