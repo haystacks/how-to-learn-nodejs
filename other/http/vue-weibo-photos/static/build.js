@@ -46,28 +46,27 @@
 
 	'use strict';
 	
-	var _lazyloadimg = __webpack_require__(1);
-	
-	var _lazyloadimg2 = _interopRequireDefault(_lazyloadimg);
-	
-	var _vue = __webpack_require__(2);
+	var _vue = __webpack_require__(1);
 	
 	var _vue2 = _interopRequireDefault(_vue);
 	
-	var _vueResource = __webpack_require__(4);
+	var _vueResource = __webpack_require__(3);
 	
 	var _vueResource2 = _interopRequireDefault(_vueResource);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	_vue2.default.use(_vueResource2.default);
 	'use strict';
-	var vm = new Vue({
+	
+	var vm = new _vue2.default({
 	
 		ready: function ready() {
-			this.$http.get('http://unofficial.sinaapp.com/index.php?s=home/index/beauty/page/{$page}', function (data, status, request) {
-				this.$data.photos = data;
-			}).error(function (data, status, request) {
+			this.$http.get('http://192.168.25.137:1126/index.php?s=home/index/beauty/page/1', function (data, status, request) {
 				console.log(data);
+				//this.$data.photos = data;
+			}).error(function (data, status, request) {
+				console.log(status);
 			});
 		},
 		el: '#app',
@@ -79,20 +78,6 @@
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var lazy = function lazy() {
-	    var images = document.images;
-	};
-	exports.default = lazy;
-
-/***/ },
-/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/*!
@@ -9397,10 +9382,10 @@
 	}
 	
 	module.exports = Vue;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ },
-/* 3 */
+/* 2 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -9497,7 +9482,7 @@
 
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -9506,11 +9491,11 @@
 	
 	function install(Vue) {
 	
-	    var _ = __webpack_require__(5)(Vue);
+	    var _ = __webpack_require__(4)(Vue);
 	
-	    Vue.url = __webpack_require__(6)(_);
-	    Vue.http = __webpack_require__(7)(_);
-	    Vue.resource = __webpack_require__(11)(_);
+	    Vue.url = __webpack_require__(5)(_);
+	    Vue.http = __webpack_require__(6)(_);
+	    Vue.resource = __webpack_require__(10)(_);
 	
 	    Object.defineProperties(Vue.prototype, {
 	
@@ -9542,7 +9527,7 @@
 	module.exports = install;
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	/**
@@ -9628,7 +9613,7 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports) {
 
 	/**
@@ -9791,16 +9776,16 @@
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Service for sending network requests.
 	 */
 	
-	var xhr = __webpack_require__(8);
-	var jsonp = __webpack_require__(10);
-	var Promise = __webpack_require__(9);
+	var xhr = __webpack_require__(7);
+	var jsonp = __webpack_require__(9);
+	var Promise = __webpack_require__(8);
 	
 	module.exports = function (_) {
 	
@@ -9957,14 +9942,14 @@
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * XMLHttp request.
 	 */
 	
-	var Promise = __webpack_require__(9);
+	var Promise = __webpack_require__(8);
 	var XDomain = window.XDomainRequest;
 	
 	module.exports = function (_, options) {
@@ -10014,7 +9999,7 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports) {
 
 	/**
@@ -10230,14 +10215,14 @@
 
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * JSONP request.
 	 */
 	
-	var Promise = __webpack_require__(9);
+	var Promise = __webpack_require__(8);
 	
 	module.exports = function (_, options) {
 	
@@ -10286,7 +10271,7 @@
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports) {
 
 	/**
