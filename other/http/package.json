@@ -1,14 +1,16 @@
 {
-  "name": "get-photos-bg-tag-name",
+  "name": "weixun",
   "version": "1.0.0",
-  "description": "learn",
-  "main": "request.js",
+  "description": "微醺--回眸一笑百媚生，六宫粉黛无颜色",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "console.log(123)"
   },
   "author": "unofficial",
-  "license": "ISC",
+  "repository": "https://github.com/cangku/weixun.git",
+  "license": "MIT",
   "dependencies": {
+    "js-yaml": "^3.4.6",
     "mysql": "^2.9.0"
   }
 }

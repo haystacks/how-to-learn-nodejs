@@ -1,0 +1,7 @@
+{
+	"notes"    : "mysql数据库连接配置文件",
+	"host"     : "127.0.0.1",
+	"user"     : "root",
+	"password" : "123456",
+	"database" : "unofficial"
+}

@@ -29,53 +29,53 @@ var postData = qs.stringify({
 });
 
 var options = {
-    hostname: 'rpt.cedexis.com',
-    path: '/f1/xG4kaMO0ebqyasifcaeqIg0O9@Q9YWyW2A2JSWu4@kQJSWva9VAPZG1keaGeecWyI6SciaaOOOoaOarqafOkcaaqabGaiaaOagabAHnIDxr0B24YlM1Pys5ODI5WCM9Kaaaa/0/0/29581/0/0/2125/0/0',
+    hostname: 'www.tumblr.com',
+    path: '/search/%E7%BE%8E%E5%A5%B3/post_page/3?sort=top&filter_post_type=any&before=0&json=1',
     method: 'GET',
+    port: 443,
     headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    }
+        'Content-Type':"application/x-www-form-urlencoded; charset=UTF-8",
+        'user-agent':'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5',
+        'x-requested-with':'XMLHttpRequest'
+    },
 };
 
 var _un = {
     "request": function() {
         var req = https.request(options, function(res) {
             var photosStr = '';
-            console.log(res.headers);
             res.setEncoding('utf8');
             res.on('data', function(data) {
                 photosStr += data;
             }).on('end', function() {
-                console.log(photosStr);
-                return;
-                var photosJson = JSON.parse(photosStr);
+                var photosJson = JSON.parse(photosStr.replace(/[\(\)]/g, ''));
+                console.log(photosJson.posts[0].photo);
                 // //
-                var userInfoSqlStr = '';
-                var photosSqlStr = '';
-                var photos = photosJson.data.photos;
-                for (var j in photos) {
-                    userInfoSqlStr = (userInfoSqlStr ? userInfoSqlStr + ',' : '') + '('+ photos[j].uid +', "'+ photos[j].user_info.name +'", "'+ photos[j].user_info.profile_image_url +'", '+ photos[j].user_info.verified +')';
-                    photosSqlStr = (photosSqlStr ? photosSqlStr + ',' : '') + '('+ photos[j].uid +', "'+ photos[j].photo_id +'", "'+ photos[j].album_id +'", "'+ photos[j].pid +'", "'+ photos[j].pic_host +'", "'+ photos[j].pic_name +'")';
-                }
-                var connection = mysql.createConnection(config);
-                connection.connect();
-                var sqls = [];
-                sqls.push('insert into user_info(uid, name, profile_image_url, verified) value'+ userInfoSqlStr);
-                sqls.push('insert into photos(uid, photo_id, album_id, pid, pic_host, pic_name) value'+ photosSqlStr);
+                // var userInfoSqlStr = '';
+                // var photosSqlStr = '';
+                // var photos = photosJson.data.photos;
+                // for (var j in photos) {
+                //     userInfoSqlStr = (userInfoSqlStr ? userInfoSqlStr + ',' : '') + '('+ photos[j].uid +', "'+ photos[j].user_info.name +'", "'+ photos[j].user_info.profile_image_url +'", '+ photos[j].user_info.verified +')';
+                //     photosSqlStr = (photosSqlStr ? photosSqlStr + ',' : '') + '('+ photos[j].uid +', "'+ photos[j].photo_id +'", "'+ photos[j].album_id +'", "'+ photos[j].pid +'", "'+ photos[j].pic_host +'", "'+ photos[j].pic_name +'")';
+                // }
+                // var connection = mysql.createConnection(config);
+                // connection.connect();
+                // var sqls = [];
+                // sqls.push('insert into user_info(uid, name, profile_image_url, verified) value'+ userInfoSqlStr);
+                // sqls.push('insert into photos(uid, photo_id, album_id, pid, pic_host, pic_name) value'+ photosSqlStr);
 
-                for (var j in sqls) {
-                    connection.query(sqls[j], function(err, result) {
-                        if(err) throw err;
-                        console.log(result.insertId);
-                    });
-                }
+                // for (var j in sqls) {
+                //     connection.query(sqls[j], function(err, result) {
+                //         if(err) throw err;
+                //         console.log(result.insertId);
+                //     });
+                // }
 
-                connection.end();
-                console.log('rid: ' + photosJson.data.rid);
-                queryConfig.rid = photosJson.data.rid;
+                // connection.end();
                 //重置options
-                options.path = '/tags/get_photos_by_tag_name?' + qs.stringify(queryConfig);
-                if(i < 50) {
+                options.path = photosJson.next_page;
+                options[':path'] = photosJson.next_page;
+                if(i < 11) {
                     _un.request();
                     i++;
                 }
@@ -86,7 +86,7 @@ var _un = {
         req.on('error', function(e) {
             console.log(e);
         })
-        req.write(postData);
+        //req.write(postData);
         req.end();
     }
 }
