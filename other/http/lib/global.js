@@ -8,7 +8,7 @@ const CONFIGDIR = ROOT + '/config';
  * @return json
  */
 var loadJsonConfig = function(fileName) {
-	return require(CONFIGDIR + '\\' + fileName + '.json');
+	return require(CONFIGDIR + '/' + fileName + '.json');
 }
 
 /**
@@ -20,7 +20,7 @@ var yaml = require('js-yaml');
 var fs = require('fs');
 var loadYamlConfig = function(fileName) {
 	try {
-		return yaml.safeLoad(fs.readFileSync(CONFIGDIR + '\\' + fileName + '.yml'));
+		return yaml.safeLoad(fs.readFileSync(CONFIGDIR + '/' + fileName + '.yml'));
 	} catch(e) {
 		return {'error': e};
 	}
