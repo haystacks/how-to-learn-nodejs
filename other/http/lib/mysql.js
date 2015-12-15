@@ -9,6 +9,10 @@ var _Mysql = function(config) {
 	this.config = config;
 	this.isConnect = false;
 	this.connection = null;
+	this.fields = '*';
+	this.sql = null;
+	this.table = null;
+	this.where = null;
 }
 
 _Mysql.prototype.init = function() {
@@ -19,16 +23,26 @@ _Mysql.prototype.init = function() {
 	}
 }
 
-_Mysql.prototype._select = function() {
+_Mysql.prototype.find = function() {
 	let res = function(err, rs) {
 		console.log(rs);
 		return rs;
 	};
-	this.connection.query('select * from photos where id = 1', res);
+	this.sql = 'select ' + this.fields + ' from ' + this.table + ' ' + (this.where ? this.where : '');
+	this.connection.query(this.sql, res);
 }
 
 _Mysql.prototype.destoty = function() {
 	this.connection.end();
 }
 var _m = new _Mysql(dbConfig);
-module.exports = _m;
+module.exports = {
+	config	: 	_m.config,
+	destoty	: 	_m.destoty,
+	fields	: 	_m.fields,
+	find	: 	_m.find,
+	init	: 	_m.init,
+	sql		: 	_m.sql,
+	table	: 	_m.table,
+	where	: 	_m.where
+};
