@@ -1,6 +1,6 @@
 /**
  * @author 		unofficial
- * weibo 
+ * weibo
  * album
  */
 "use strict";
@@ -23,9 +23,10 @@ Weibo.prototype.isLogin = function() {
 		let options = {
 			hostname: 'photo.weibo.com',
 			path: '/welcome/hot',
-			sub: this.sub,
+			cookie: this.sub,
 		};
 		let callback = function(res) {
+			console.log(res);
 			if(res.statusCode != 200) {
 				self.sub = '';
 				self.login();
@@ -75,7 +76,9 @@ Weibo.prototype.login = function() {
 }
 
 var Album = function() {
-	_weibo.isLogin();
+	if(!_weibo.isLogin()) {
+		_weibo.login();
+	}
 }
 
 /**
@@ -98,11 +101,13 @@ Album.prototype.add = function(e) {
 		},
 	};
 	let callback = function(res) {
-		let resText = JSON.parse(res.text);
-		if(resText && resText.ok) {
-			console.log(res.text);
-		} else {
-			console.log('add fail');
+		if(res.statusCode == 200) {
+			let resText = JSON.parse(res.text);
+			if(resText && resText.ok) {
+				console.log(res.text);
+			} else {
+				console.log('add fail');
+			}
 		}
 	};
 	request.post(['http', options, callback, data]);
@@ -122,7 +127,7 @@ module.exports = {
 	password: _weibo.password,
 	sub: _weibo.sub,
 	login: _weibo.login,
-	issub: _weibo.issub,
+	isLogin: _weibo.isLogin,
 	album: {
 		add: _album.add,
 		upload: _album.upload
