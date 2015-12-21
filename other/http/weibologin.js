@@ -1,19 +1,21 @@
+/**
+ * 微博模拟登录
+ * weibo sign in
+ * @author unofficial
+ */
+"use strict";
+const ROOT = global.root = __dirname;
+var g = require(ROOT + '/lib/global');
+
 var https = require('https');
 var qs = require('querystring');
-var fs = require('fs');
-var mysql = require('mysql');
-var config = {
-  host     : '127.0.0.1',
-  user     : 'root',
-  password : '123456',
-  database : 'unofficial'
-};
-
-var i = 10;
-
+/**
+ * sign in info
+ */
+var weibo = g.loadYaml('weibo');
 var postData = qs.stringify({
-    'username': 'cangku@unofficial.cn',
-    'password': '123456789',
+    'username': weibo.username,
+    'password': weibo.password,
 });
 
 var options = {
@@ -32,13 +34,33 @@ var options = {
 var _un = {
     "request": function() {
         var req = https.request(options, function(res) {
-            console.log(res.headers['set-cookie'][0]);
+            res.text = '';
+            //console.log(res.headers['set-cookie'][0]);
+            res.on('data', function(chunk) {
+                res.text += chunk;
+            }).on('end', function() {
+                /**
+                 * retcode
+                 * 50011015,50011002 用户名或密码错误
+                 * 20000000 登录成功
+                 */
+                let rsInfo = JSON.parse(res.text);
+                if(rsInfo.retcode == 20000000) {
+                     /**
+                      * write SUB to weibo.yml
+                      */
+                     g.writeYaml('weibo', {'sub':res.headers['set-cookie'][0]});
+                } else {
+                    console.log(rsInfo.msg);
+                }
+            })
         })
 
         //error
         req.on('error', function(e) {
-            console.log(e);
+            if(e) throw e;
         })
+
         req.write(postData);
         req.end();
     }
