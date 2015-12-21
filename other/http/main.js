@@ -4,4 +4,5 @@ const ROOT = global.root = __dirname;
 /**
  * 执行其他操作
  */
-require('./lib/test');
+var weibo = require('./lib/weibo');
+weibo.album.add({name: '测试4'});
