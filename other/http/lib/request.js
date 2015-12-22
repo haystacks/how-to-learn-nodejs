@@ -18,18 +18,20 @@ var request = {
 	},
 	_e: function(e) {
 		let [protocol, options, callback, method, data] = e;
+		let headers = {
+			'Content-Type':"application/x-www-form-urlencoded; charset=UTF-8",
+			'Content-Length': data ? data.length : 0,
+			'user-agent':'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5',
+		};
+		for(let i in options.headers) {
+			headers[i] = options.headers[i];
+		}
 		let theOptions = {
 			hostname: options.hostname,
 			path: options.path,
 			method: method,
 			port: options.port ? options.port : (protocol == 'https' ? 443 : 80),
-			headers: {
-				'Content-Type':"application/x-www-form-urlencoded; charset=UTF-8",
-				'Content-Length': data ? data.length : 0,
-				'user-agent':'Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_2_1 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8C148 Safari/6533.18.5',
-				'Referer': options.headers && options.headers.Referer ? options.headers.Referer : options.hostname,
-				'Cookie': options.cookie ? options.cookie : '',
-			},
+			headers: headers,
 		};
 		let self = this;
 		if(protocol == 'https') {

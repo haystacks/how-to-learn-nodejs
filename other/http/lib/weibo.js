@@ -7,28 +7,40 @@
 const ROOT = global.root;
 var g = require(ROOT + '/lib/global');
 var request = require(ROOT + '/lib/request');
+var mysql = require(ROOT + '/lib/mysql');
+var qs = require('querystring');
 
 var Weibo = function() {
 	var signInInfo = g.loadYaml('weibo');
 	this.username = signInInfo.username;
 	this.password = signInInfo.password;
-	this.sub = signInInfo.sub;
+	this.searchdata = {
+		tag: '美女',
+		count: 50,
+		page: 1,
+		type: 'best',
+		rid: '',
+	};
+	this.cookie = signInInfo.sub;
+	this.isLogin();
+	mysql.init();
 }
 /**
  * weibo/isLogin 		是否登录(sub是否过期)
  */
 Weibo.prototype.isLogin = function() {
 	let self = this;
-	if(this.sub) {
+	if(this.cookie) {
 		let options = {
 			hostname: 'photo.weibo.com',
 			path: '/welcome/hot',
-			cookie: this.sub,
+			headers: {
+				'cookie': this.cookie,
+			}
 		};
 		let callback = function(res) {
-			console.log(res);
 			if(res.statusCode != 200) {
-				self.sub = '';
+				self.cookie = '';
 				self.login();
 			};
 		}
@@ -70,15 +82,46 @@ Weibo.prototype.login = function() {
 			console.log(rsInfo.msg);
 		}
 	}
-	if(!this.isLogin()) {
-		request.post(['https', options, callback, data]);
+	request.post(['https', options, callback, data]);
+}
+
+/**
+ * search
+ */
+Weibo.prototype.search = function() {
+	let options = {
+		hostname: 'photo.weibo.com',
+		path: '/tags/get_photos_by_tag_name?' + qs.stringify(this.weibo.searchdata),
+		headers: {
+			'cookie': this.cookie,
+		},
+	};
+	let callback = function(res) {
+		let userInfoSqlStr = '';
+		let photosSqlStr = '';
+		let resJson = JSON.parse(res.text);
+		let photos = resJson.data.photos;
+		for (let i in photos) {
+			userInfoSqlStr = (userInfoSqlStr ? userInfoSqlStr + ',' : '') + '('+ photos[i].uid +', "'+ photos[i].user_info.name +'", "'+ photos[i].user_info.profile_image_url +'", '+ photos[i].user_info.verified +')';
+			photosSqlStr = (photosSqlStr ? photosSqlStr + ',' : '') + '('+ photos[i].uid +', "'+ photos[i].photo_id +'", "'+ photos[i].album_id +'", "'+ photos[i].pid +'", "'+ photos[i].pic_host +'", "'+ photos[i].pic_name +'")';
+		}
+		let sqls = ['insert into user_info(uid, name, profile_image_url, verified) value'+ userInfoSqlStr, 'insert into photos(uid, photo_id, album_id, pid, pic_host, pic_name) value'+ photosSqlStr];
+		/**
+		 * mqsql insert
+		 */
+		let callback = function(err, rs) {
+			console.log(rs.insertId);
+		};
+		for (let i in sqls) {
+			mysql.query(sqls[i], callback);
+		}
+		mysql.destroy();
 	}
+	request.get(['http', options, callback]);
 }
 
 var Album = function() {
-	if(!_weibo.isLogin()) {
-		_weibo.login();
-	}
+	_weibo.isLogin();
 }
 
 /**
@@ -95,9 +138,9 @@ Album.prototype.add = function(e) {
 	let options = {
 		hostname: 'm.weibo.cn',
 		path: '/album/addAlbum',
-		sub: _weibo.sub,
 		headers: {
 			'Referer':'http://m.weibo.cn/album',
+			'cookie': _weibo.cookie,
 		},
 	};
 	let callback = function(res) {
@@ -123,11 +166,13 @@ var _weibo = new Weibo();
 var _album = new Album();
 
 module.exports = {
+	weibo: _weibo,
 	username: _weibo.username,
 	password: _weibo.password,
-	sub: _weibo.sub,
+	cookie: _weibo.cookie,
 	login: _weibo.login,
 	isLogin: _weibo.isLogin,
+	search: _weibo.search,
 	album: {
 		add: _album.add,
 		upload: _album.upload

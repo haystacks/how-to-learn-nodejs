@@ -32,15 +32,20 @@ _Mysql.prototype.find = function() {
 	this.connection.query(this.sql, res);
 }
 
-_Mysql.prototype.destoty = function() {
+_Mysql.prototype.query = function(sql, callback) {
+	this.connection.query(sql, callback);
+}
+
+_Mysql.prototype.destroy = function() {
 	this.connection.end();
 }
 var _m = new _Mysql(dbConfig);
 module.exports = {
 	config	: 	_m.config,
-	destoty	: 	_m.destoty,
+	destroy	: 	_m.destroy,
 	fields	: 	_m.fields,
 	find	: 	_m.find,
+	query 	: 	_m.query,
 	init	: 	_m.init,
 	sql		: 	_m.sql,
 	table	: 	_m.table,
