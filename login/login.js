@@ -1,38 +1,28 @@
 'use strict';
 const request = require('koa-request'),
-      crypto  = require('crypto');
+      fs      = require('fs'),
+      crypto  = require('crypto'),
+      zlib    = require('zlib');
 
 function md5 (text) {
     return crypto.createHash('md5').update(text).digest('hex');
 }
 
-function loginQrCode() {
-    var loginRs = startlogin();
-
-    const config = {
-        weixin: {
-            host: 'https://mp.weixin.qq.com',
-            url: '/cgi-bin/bizlogin?action=startlogin',
-            referer: loginRs.base_resp.redirect_url
-        }
-    }
-}
-
 module.exports = {
-    weixin: function() {
+    qrcode: function() {
         return function * (next) {
+            this.set('Access-Control-Allow-Origin', 'http://192.168.25.137:4000');
             const body     = this.request.body;
             const username = body.username || 'unofficial';
             const pwd      = body.password || '******';
-            this.set('Access-Control-Allow-Origin', 'http://192.168.25.137:4000');
-            const config = {
+            let config     = {
                 weixin: {
                     host: 'https://mp.weixin.qq.com',
                     url: '/cgi-bin/bizlogin?action=startlogin',
                     referer: '/cgi-bin/loginpage'
                 }
             }
-            var options = {
+            let options    = {
                 url: config.weixin.host.concat(config.weixin.url),
                 form: {
                     username: username,
@@ -45,10 +35,25 @@ module.exports = {
                     Referer: config.weixin.host.concat(config.weixin.referer)
                 }
             };
+            var response   = yield request(options);
+            config = {
+                weixin: {
+                    host: 'https://mp.weixin.qq.com',
+                    url: '/cgi-bin/loginqrcode?action=getqrcode&param=4300&rd=893',
+                    referer: JSON.parse(response.body).redirect_url
+                }
+            };
+            options = {
+                url: config.weixin.host.concat(config.weixin.url),
+                headers: {
+                    Referer: config.weixin.host.concat(config.weixin.referer),
+                    Cookie: response.headers['set-cookie']
+                },
+                encoding: null
+            };
+
             var response = yield request(options);
-            console.log(response.headers);
-            var info     = JSON.parse(response.body);
-            this.body    = info;
+            this.body = ['data:image/jpg;base64,', response.body.toString('base64')].join('');
             yield * next;
         }
     }
