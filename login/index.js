@@ -1,7 +1,8 @@
 const app     = require('koa')(),
       koaBody = require('koa-body')(),
       router  = require('koa-router')(),
-      login   = require('./login.js');
+      login   = require('./login.js'),
+      vote   = require('./vote.js');
 
 router.get('/qrcode', koaBody, function * (next) {
       this.body = 'www.unofficial.cn';
@@ -32,5 +33,9 @@ router.post('/search/user_tag', koaBody, login.search.userTag());
  */
 router.get('/message/list', koaBody, login.message.list());
 router.get('/message/response', koaBody, login.message.response());
+
+
+// 投票模拟
+router.get('/vote', koaBody, vote.do());
 
 app.use(router.routes()).listen(3000);
