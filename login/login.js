@@ -3,7 +3,9 @@ const request   = require('koa-request'),
       fs        = require('fs'),
       crypto    = require('crypto'),
       zlib      = require('zlib'),
-      CORS_URL  = 'http://192.168.0.5:4000',
+      CORS_URL  = function() {
+          return ''.concat(this.request.protocol, '://',  this.request.hostname, ':4000');
+      },
       CONF_PATH = './config.json';
 
 let conf        = require(CONF_PATH);
@@ -14,7 +16,7 @@ function md5 (text) {
 module.exports = {
     qrcode: function() {
         return function * (next) {
-            this.set('Access-Control-Allow-Origin', CORS_URL);
+            this.set('Access-Control-Allow-Origin', CORS_URL.call(this));
             this.set('Content-Type', 'application/json');
             const body     = this.request.body;
             const username = body.username || 'unofficial';
@@ -68,7 +70,7 @@ module.exports = {
     },
     ask: function() {
         return function * (next) {
-            this.set('Access-Control-Allow-Origin', CORS_URL);
+            this.set('Access-Control-Allow-Origin', CORS_URL.call(this));
             this.set('Content-Type', 'application/json');
             /**
              *
@@ -95,7 +97,7 @@ module.exports = {
     },
     bizlogin: function() {
         return function * (next) {
-            this.set('Access-Control-Allow-Origin', CORS_URL);
+            this.set('Access-Control-Allow-Origin', CORS_URL.call(this));
             this.set('Content-Type', 'application/json');
             /**
              *
@@ -137,7 +139,7 @@ module.exports = {
     search: {
         userTag: function() {
             return function * (next) {
-                this.set('Access-Control-Allow-Origin', CORS_URL);
+                this.set('Access-Control-Allow-Origin', CORS_URL.call(this));
                 this.set('Content-Type', 'application/json');
                 /**
                  *
@@ -178,7 +180,7 @@ module.exports = {
     message: {
         list: function() {
             return function * (next) {
-                this.set('Access-Control-Allow-Origin', CORS_URL);
+                this.set('Access-Control-Allow-Origin', CORS_URL.call(this));
                 this.set('Content-Type', 'application/json');
                 /**
                  *
@@ -209,7 +211,7 @@ module.exports = {
                     fakeid: 'o8dqJs7Ix6OScJ-XUTal0raHtLhs',
                     response: '你好'
                 };
-                this.set('Access-Control-Allow-Origin', CORS_URL);
+                this.set('Access-Control-Allow-Origin', CORS_URL.call(this));
                 this.set('Content-Type', 'application/json');
                 /**
                  *
