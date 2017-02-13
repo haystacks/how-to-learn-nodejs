@@ -2,6 +2,7 @@ const app     = require('koa')(),
       koaBody = require('koa-body')(),
       router  = require('koa-router')(),
       login   = require('./login.js'),
+      cnblogs   = require('./cnblogs.js'),
       vote   = require('./vote.js');
 
 router.get('/qrcode', koaBody, function * (next) {
@@ -37,5 +38,8 @@ router.get('/message/response', koaBody, login.message.response());
 
 // 投票模拟
 router.get('/vote', koaBody, vote.do());
+
+// 博客园登录
+router.post('/cnblogs/login', koaBody, cnblogs.login());
 
 app.use(router.routes()).listen(3000);
