@@ -41,5 +41,6 @@ router.get('/vote', koaBody, vote.do());
 
 // 博客园登录
 router.post('/cnblogs/login', koaBody, cnblogs.login());
+router.post('/feed/recent', koaBody, cnblogs.feed.recent());
 
 app.use(router.routes()).listen(3000);
