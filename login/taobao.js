@@ -38,3 +38,9 @@ ncoToken: **input[name='ncoToken']**
 TPL_username: **input[name='TPL_username']**
 ua: *******
  */
+
+/**
+ * loginForm
+ * 登录操作mlogin.js
+ * ① 密码加密 passwordRSA
+ */
