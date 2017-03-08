@@ -11,7 +11,17 @@ page.onUrlChanged = function(targetUrl) {
 };
 
 page.onResourceRequested = function(requestData, networkRequest) {
-    console.log('Request (#' + requestData.url + ')');
+    if(requestData.url === 'https://login.m.taobao.com/login.htm?_input_charset=utf-8')
+        console.log('Request (#' + requestData.url + ')');
+};
+page.onResourceReceived = function(response) {
+    if(response.url === 'https://login.m.taobao.com/login.htm?_input_charset=utf-8') {
+        console.log('Response (#' + response.id + ', stage "' + response.stage + '"): ' + JSON.stringify(response));
+        page.render('./taobaolog/taobao.jpeg', {format: 'jpeg', quality: '100'});
+    } else if(response.url === 'http://www.alimama.com/index.htm') {
+        console.log(JSON.stringify(response), JSON.stringify(page.cookies));
+        page.render('./taobaolog/alimama.jpeg', {format: 'jpeg', quality: '100'});
+    }
 };
 page.open('https://login.m.taobao.com/login.htm?redirectURL=http://www.alimama.com&loginFrom=wap_alimama', function(status) {
     if(status === 'success') {
@@ -21,9 +31,12 @@ page.open('https://login.m.taobao.com/login.htm?redirectURL=http://www.alimama.c
                 "password": ""
             };
             // 添加上操作事件
+            $('#UA_InputId').val('');
             $('#username').val(config.username);
             $('#password').val(config.password);
-            $('#submit-btn').click();
+            // 解除btn的disabled
+            $('#username').trigger('input');
+            $('#submit-btn').trigger('click');
             // return document.documentElement.outerHTML;
         });
         // fs.write('./taobao.html', content);
