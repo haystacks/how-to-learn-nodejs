@@ -30,13 +30,43 @@ page.open('https://login.m.taobao.com/login.htm?redirectURL=http://www.alimama.c
                 "username": "",
                 "password": ""
             };
-            // 添加上操作事件
-            $('#UA_InputId').val('');
-            $('#username').val(config.username);
-            $('#password').val(config.password);
-            // 解除btn的disabled
-            $('#username').trigger('input');
-            $('#submit-btn').trigger('click');
+            var i = 1;
+            function touchstart(el, x, y, number, target) {
+                var touch = new Touch({
+                    identifier: number,
+                    target: target,
+                    clientX: x,
+                    clientY: y
+                });
+                var event = new TouchEvent('touchstart', {
+                    touches: [touch],
+                    targetTouches: [touch],
+                    changedTouches: [touch],
+                });
+                el.dispatchEvent(event);
+            }
+
+            function focus(el) {
+                var event = new Event('focus');
+                el.dispatchEvent(event);
+            }
+
+            setTimeout(function() {
+                //touchstart(document, 188, 306, i++, document.getElementById('username'));
+                focus($('#username')[0]);
+                $('#username').val('');
+                $('#username').trigger('input');
+            }, 3e3)
+            setTimeout(function() {
+                //touchstart(document, 188, 402, i++, document.getElementById('password'));
+                focus($('#password')[0]);
+                $('#password').val('');
+                $('#password').trigger('input');
+                $('#submit-btn').trigger('click');
+            }, 5e3)
+            // setTimeout(function() {
+            //     touchstart(document, 374, 648, i++, document.getElementById('submit-btn'));
+            // }, 7e3)
             // return document.documentElement.outerHTML;
         });
         // fs.write('./taobao.html', content);
