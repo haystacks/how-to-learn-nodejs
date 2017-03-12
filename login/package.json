@@ -16,6 +16,7 @@
     "koa-hello-world": "^1.0.1",
     "koa-request": "^1.0.0",
     "koa-router": "^5.4.0",
+    "phantom": "^4.0.0",
     "request": "^2.79.0"
   }
 }
