@@ -15,12 +15,12 @@ page.onResourceRequested = function(requestData, networkRequest) {
         console.log('Request (#' + requestData.url + ')');
 };
 page.onResourceReceived = function(response) {
-    console.log(response.url);
+    // console.log(response.url);
     if(response.url === 'https://login.m.taobao.com/login.htm?_input_charset=utf-8') {
-        //console.log('Response (#' + response.id + ', stage "' + response.stage + '"): ' + JSON.stringify(response));
+        console.log('Response (#' + response.id + ', stage "' + response.stage + '"): ' + JSON.stringify(response));
         page.render('./taobaolog/taobao.jpeg', {format: 'jpeg', quality: '100'});
     } else if(response.url === 'http://www.alimama.com/index.htm') {
-        //console.log(JSON.stringify(response), JSON.stringify(page.cookies));
+        console.log(JSON.stringify(response), JSON.stringify(page.cookies));
         page.render('./taobaolog/alimama.jpeg', {format: 'jpeg', quality: '100'});
     }
 };
@@ -61,7 +61,13 @@ page.open('https://login.m.taobao.com/login.htm?redirectURL=http://www.alimama.c
                 //touchstart(document, 188, 306, i++, document.getElementById('username'));
                 ifocus($('#username')[0]);
                 $('#username').val(config.username);
-                $('#username').trigger('keyup');
+                var whichs = [67,85,78,88,73,76,85];
+                var len = whichs.length;
+                for(var i=0; i<len; i++) {
+                    e = $.Event("keyup");
+                    e.which = i;
+                    $('#username').trigger(e);
+                }
                 $('#username').trigger('input');
                 iblur($('#username')[0]);
             }, 3e3)
