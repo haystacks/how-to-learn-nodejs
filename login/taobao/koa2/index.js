@@ -1,3 +1,5 @@
+const sleep = require('./sleep');
+const request = require('request');
 const phantom = require('phantom');
 const Koa = require('koa');
 const app = new Koa();
@@ -16,8 +18,7 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async (ctx, next) => {
-    console.log(ctx.request.type);
-    if (ctx.is('html')) {
+    if (ctx.url === '/') {
         const instance = await phantom.create();
         const page = await instance.createPage();
         page.setting('userAgent', 'Mozilla/5.0 (Linux; Android 5.1; m2 note Build/LMY47D; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043024 Safari/537.36 MicroMessenger/6.5.6.1020 NetType/WIFI Language/zh_CN');
@@ -31,15 +32,18 @@ app.use(async (ctx, next) => {
         });
 
         // 定义回调参数
-        let res = {};
+        let res;
         await page.on("onResourceReceived", function(response) {
             if(response.url === 'http://www.alimama.com/index.htm' || response.url === 'http://www.alimama.com/500.htm') {
-                res = {
-                    'status': 1,
-                    'content': page.property('cookies')
-                };
-                console.log(res);
-            } else if(response.url === 'https://login.m.taobao.com/login.htm?_input_charset=utf-8') {
+                console.log('A', response);
+                page.property('cookies').then(function(cookies) {
+                    res = {
+                        'status': 1,
+                        'content': cookies
+                    };
+                })
+            } else if(response.url === 'https://login.m.taobao.com/login.htm?_input_charset=utf-8' && response.headers.length === 14) {
+                console.log('B', response);
                 res = {
                     'status': 0,
                     'content': '登录失败'
@@ -106,7 +110,15 @@ app.use(async (ctx, next) => {
 
             });
         }
+        while(!res) {
+            await sleep(100);
+        }
         ctx.body = JSON.stringify(res);
+    } else if(ctx.url === '/21') {
+        //
+        request.get({
+            url: 'http://pub.alimama.com/common/code/getAuctionCode.json',
+        })
     }
 })
 
